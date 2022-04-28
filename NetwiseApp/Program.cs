@@ -12,6 +12,7 @@ namespace NetwiseApp
         {
             CatClient catClient = new CatClient("https://catfact.ninja");
             var catFact = catClient.GetCatFactAsync();
+
             Console.WriteLine($"{catFact.Fact}");
             Console.ReadLine();
         }
