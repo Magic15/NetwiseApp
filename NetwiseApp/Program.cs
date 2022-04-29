@@ -1,8 +1,6 @@
-﻿using NetwiseApp.Models;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NetwiseApp.Services;
 using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NetwiseApp
 {
@@ -10,10 +8,16 @@ namespace NetwiseApp
     {
         static void Main(string[] args)
         {
-            CatClient catClient = new CatClient("https://catfact.ninja");
-            var catFact = catClient.GetCatFactAsync();
+            var serviceProvider = new ServiceCollection()
+           .AddSingleton<IFileService, FileService>()
+           .AddSingleton<ICatService, CatService>()
+           .BuildServiceProvider();
 
-            Console.WriteLine($"{catFact.Fact}");
+            var catService = serviceProvider.GetService<ICatService>();
+
+            string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var filePath = $"{System.IO.Path.GetDirectoryName(path)}\\catFactsFile.txt";
+            catService.GetCatFactAndSaveToFile(filePath);
             Console.ReadLine();
         }
     }

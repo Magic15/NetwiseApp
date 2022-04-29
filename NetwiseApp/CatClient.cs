@@ -19,7 +19,7 @@ namespace NetwiseApp
             _client = new RestClient(_baseUrl);
         }
 
-        public CatFactModel GetCatFactAsync()
+        public CatFactModel GetCatFact()
         {
             var request = new RestRequest("/fact", Method.Get);
             var response =  _client.GetAsync<CatFactModel>(request);
