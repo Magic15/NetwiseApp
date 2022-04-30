@@ -16,6 +16,7 @@ namespace NetwiseApp
         }
         public void CreateCatFacts(int nTimes)
         {
+            Console.WriteLine("started getting cat facts by synchronous way");
             var timer = new Stopwatch();
             timer.Start();
             _catService.GetCatFactsAndSaveToFile(nTimes, _filePath);
@@ -27,6 +28,7 @@ namespace NetwiseApp
         }
         public void CreateCatFactsAsync(int nTimes)
         {
+            Console.WriteLine("Started getting cat facts by asynchronous way");
             var timer = new Stopwatch();
             timer.Start();
             _catService.GetCatFactsAsyncAndSaveToFile(nTimes, _filePath);
