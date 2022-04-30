@@ -17,11 +17,13 @@ namespace NetwiseApp
             var catFactsCreator = ActivatorUtilities.CreateInstance<CatFactsCreator>(serviceProvider);
             string isSynchronous;
             int nTimes;
-            string quit = "repeat";
+            string repeatFlag = "repeat";
+            string quitFlag = "quit";
+            string quit = repeatFlag;
 
             Console.WriteLine("Hello in cat facts console appliaction");
 
-            while (quit.Equals("repeat"))
+            while (quit.Equals(repeatFlag))
             {
                 isSynchronous = Prompt.Select("Select way to get cat facts", new[] { "synchronous requests", "asynchronous requests" });
                 nTimes = Prompt.Input<int>("How many cat facts do you want to get?");
@@ -31,7 +33,7 @@ namespace NetwiseApp
                 else
                     catFactsCreator.CreateCatFactsAsync(nTimes);
 
-                quit = Prompt.Select("Do you want to repeat process?",  new[] { "repeat", "quit" });             
+                quit = Prompt.Select("Do you want to repeat process?",  new[] { repeatFlag, quitFlag });             
             }                                   
         }
     }
