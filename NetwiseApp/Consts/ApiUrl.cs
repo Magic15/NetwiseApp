@@ -8,6 +8,6 @@ namespace NetwiseApp.Consts
 {
     public static class ApiUrl
     {
-        public static string CatFactsApiUrl = "https://catfact.ninja";
+        public static string CatFactApiUrl = "https://catfact.ninja";
     }
 }

@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace NetwiseApp.Services
 {
-
     public interface ICatService
     {
-        void GetCatFactAndSaveToFile(string filePath);
+        void GetCatFactsAndSaveToFile(int nTimes, string filePath);
+        void GetCatFactsAsyncAndSaveToFile(int nTimes, string filePath);
     }
     public class CatService : ICatService
     {
         private readonly string _baseUrl = "https://catfact.ninja";
-        private readonly string _filePath = "";
         private readonly IFileService _fileService;
         private CatClient _catClient;
 
@@ -29,18 +28,30 @@ namespace NetwiseApp.Services
         {
             return _catClient.GetCatFact();
         }
-        public void GetCatFactAndSaveToFile(string filePath)
+        private Task<CatFactModel> GetCatFactAsnyc()
         {
-            var timer = new Stopwatch();
-            timer.Start();
-            CatFactModel catFact = GetCatFact();
-            timer.Stop();
-            TimeSpan timeTaken = timer.Elapsed;
-            string foo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
-            Console.WriteLine(foo);
-            
-            //Console.WriteLine($"{catFact.Fact};{catFact.Length}");
+            return _catClient.GetCatFactAsync();
+        }
+        public void GetCatFactAndSaveToFile(string filePath)
+        {            
+            CatFactModel catFact = GetCatFact();                      
             _fileService.SaveMessageToFile($"{catFact.Fact};{catFact.Length}", filePath);
+        }
+        public void GetCatFactsAndSaveToFile(int nTimes, string filePath)
+        {
+            for(int i = 0; i < nTimes ; i++)
+            {
+                var catFact = GetCatFact();
+                _fileService.SaveMessageToFile($"{catFact.Fact};{catFact.Length}", filePath);
+            }            
+        }
+        public async void GetCatFactsAsyncAndSaveToFile(int nTimes, string filePath)
+        {            
+            List<Task<CatFactModel>> tasks = new List<Task<CatFactModel>>();
+            for (int i = 0; i < nTimes; i++)            
+                tasks.Add(GetCatFactAsnyc());            
+            foreach (var catFact in await Task.WhenAll(tasks))            
+                _fileService.SaveMessageToFile($"{catFact.Fact};{catFact.Length}", filePath);                     
         }
     }
 }
