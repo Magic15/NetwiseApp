@@ -1,4 +1,5 @@
-﻿using NetwiseApp.Models;
+﻿using NetwiseApp.Consts;
+using NetwiseApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace NetwiseApp.Services
     }
     public class CatService : ICatService
     {
-        private readonly string _baseUrl = "https://catfact.ninja";
+        private string _baseUrl = ApiUrl.CatFactApiUrl;
         private readonly IFileService _fileService;
         private CatClient _catClient;
 
