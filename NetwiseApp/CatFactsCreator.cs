@@ -16,27 +16,27 @@ namespace NetwiseApp
         }
         public void CreateCatFacts(int nTimes)
         {
-            Console.WriteLine("started getting cat facts by synchronous way");
+            Console.WriteLine("started getting cat facts in synchronous way");
             var timer = new Stopwatch();
             timer.Start();
             _catService.GetCatFactsAndSaveToFile(nTimes, _filePath);
             timer.Stop();
             Console.WriteLine("saving to file ended");
             TimeSpan timeTaken = timer.Elapsed;
-            string foo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
-            Console.WriteLine(foo);
+            string timeInfo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
+            Console.WriteLine(timeInfo);
         }
         public void CreateCatFactsAsync(int nTimes)
         {
-            Console.WriteLine("Started getting cat facts by asynchronous way");
+            Console.WriteLine("Started getting cat facts in asynchronous way");
             var timer = new Stopwatch();
             timer.Start();
             _catService.GetCatFactsAsyncAndSaveToFile(nTimes, _filePath);
             timer.Stop();
             Console.WriteLine("saving to file ended");
             var timeTaken = timer.Elapsed;
-            var foo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
-            Console.WriteLine(foo);
+            var timeInfo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
+            Console.WriteLine(timeInfo);
         }
     }
 }
